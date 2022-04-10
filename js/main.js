@@ -34,8 +34,9 @@ function searchMovies(searchText){
 	$.ajax({
 		url: 'http://www.omdbapi.com/?apikey='+ api_key +'&s=' + searchText,
 	}).done((data) => {
+		console.log(data);
 		let movies = data.Search;
-		let output = "";
+		var output = "";
 
 		// create html to display each movie
 		$.each(movies, (index, movie) => {
@@ -47,7 +48,16 @@ function searchMovies(searchText){
 						class='btn btn-info' href='detail.html'>View</a>
 				</div>
 		`});
-		
+
+		// display the results
+		$('#movies .row').html(output);
+	}).fail(() => {
+		// create html to display error message
+		var output = `
+			<div class='col-md-12 text-center'>
+				<p>Could not reach the api. Please follow the instructions of the README file.</p>
+			</div>
+		`
 		// display the results
 		$('#movies .row').html(output);
 	});
